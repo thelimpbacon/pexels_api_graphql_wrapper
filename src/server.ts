@@ -1,11 +1,21 @@
 import "reflect-metadata";
-import Express from "express";
-import { ApolloServer, gql } from "apollo-server-express";
+import Express, { Request, Response } from "express";
+import { ApolloServer } from "apollo-server-express";
 import { createSchema } from "./lib/schema";
+
+interface ExpressReqResType {
+  req: Request;
+  res: Response;
+}
 
 const main = async () => {
   const schema = await createSchema();
-  const apolloServer = new ApolloServer({ schema });
+  const apolloServer = new ApolloServer({
+    schema,
+    context: ({ req }: ExpressReqResType) => {
+      return { authorization: req.headers.authorization };
+    },
+  });
 
   await apolloServer.start();
 
