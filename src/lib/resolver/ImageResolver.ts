@@ -5,8 +5,13 @@ import {
   GetPhotoArgs,
   PhotoArrayResponse,
   PhotosArgs,
+  PhotoSearchArgs,
 } from "../../utils/graphqlTypes";
-import { PHOTO_BASE_URL, CURATED_PHOTOS } from "../../utils/urls";
+import {
+  PHOTO_BASE_URL,
+  CURATED_PHOTOS,
+  SEARCH_PHOTOS,
+} from "../../utils/urls";
 
 @Resolver()
 export class PhotoResolver {
@@ -45,6 +50,34 @@ export class PhotoResolver {
       });
 
       return curatedPhotos.data;
+    } catch (error) {
+      console.error(error.message);
+      return [];
+    }
+  }
+
+  @Query(() => PhotoArrayResponse)
+  async searchPhotos(
+    @Args()
+    { query, orientation, size, color, locale, page, per_page }: PhotoSearchArgs
+  ) {
+    try {
+      const searchedPhotos = await axios.get(SEARCH_PHOTOS, {
+        headers: {
+          Authorization: process.env.API_KEY,
+        },
+        params: {
+          query,
+          orientation,
+          size,
+          color,
+          locale,
+          page,
+          per_page,
+        },
+      });
+
+      return searchedPhotos.data;
     } catch (error) {
       console.error(error.message);
       return [];

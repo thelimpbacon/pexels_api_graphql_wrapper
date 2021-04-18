@@ -1,5 +1,6 @@
 import { ArgsType, Field, Int, ObjectType } from "type-graphql";
-import { Max } from "class-validator";
+import { IsIn, Max } from "class-validator";
+import { LOCALE, ORIENTATION, SIZE } from "./supportedArgs";
 
 @ObjectType()
 class SrcType {
@@ -93,4 +94,25 @@ export class PhotosArgs {
   @Field(() => Int, { nullable: true, defaultValue: 15 })
   @Max(80)
   per_page?: number;
+}
+
+@ArgsType()
+export class PhotoSearchArgs extends PhotosArgs {
+  @Field({ nullable: false })
+  query: string;
+
+  @Field({ nullable: true })
+  @IsIn(ORIENTATION)
+  orientation: string;
+
+  @Field({ nullable: true })
+  @IsIn(SIZE)
+  size: string;
+
+  @Field({ nullable: true })
+  color: string;
+
+  @Field({ nullable: true })
+  @IsIn(LOCALE)
+  locale: string;
 }
