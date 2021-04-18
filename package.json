@@ -10,7 +10,7 @@
     "start": "node 'dist/server.js'",
     "build": "tsc -p . && ncp src/schema dist/schema",
     "start:dev": "npm run build:dev",
-    "build:dev": "nodemon 'src/server.ts' --exec 'ts-node' src/server.ts -e ts,graphql"
+    "build:dev": "nodemon -r dotenv/config 'src/server.ts' --exec 'ts-node' src/server.ts -e ts,graphql"
   },
   "repository": {
     "type": "git",
@@ -24,7 +24,9 @@
   "homepage": "https://github.com/thelimpbacon/pexels_api_graphql_wrapper#readme",
   "dependencies": {
     "apollo-server-express": "^2.22.2",
+    "axios": "^0.21.1",
     "class-validator": "^0.13.1",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "graphql": "^15.5.0",
     "reflect-metadata": "^0.1.13",

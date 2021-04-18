@@ -1,8 +1,8 @@
 import { buildSchema } from "type-graphql";
-import { ExampleResolver } from "../resolver/ExampleResolver";
+import { PhotoResolver } from "../resolver/ImageResolver";
 
 export const createSchema = async () => {
   return await buildSchema({
-    resolvers: [ExampleResolver],
+    resolvers: [PhotoResolver],
   });
 };

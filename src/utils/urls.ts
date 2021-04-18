@@ -1,0 +1,2 @@
+export const PHOTO_BASE_URL = "https://api.pexels.com/v1/";
+export const CURATED_PHOTOS = "https://api.pexels.com/v1/curated";
