@@ -7,8 +7,8 @@
     "node": "14.15.4"
   },
   "scripts": {
-    "start": "node 'dist/server.js'",
-    "build": "tsc -p . && ncp src/schema dist/schema",
+    "start": "node  -r dotenv/config 'dist/server.js'",
+    "build": "tsc -p . && ncp src dist",
     "start:dev": "npm run build:dev",
     "build:dev": "nodemon -r dotenv/config 'src/server.ts' --exec 'ts-node' src/server.ts -e ts,graphql"
   },
@@ -33,6 +33,7 @@
     "type-graphql": "^1.1.1"
   },
   "devDependencies": {
+    "ncp": "^2.0.0",
     "nodemon": "^2.0.7",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.4"
