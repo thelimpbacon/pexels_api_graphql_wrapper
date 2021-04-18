@@ -30,7 +30,22 @@ class SrcType {
 }
 
 @ObjectType()
-export class PhotoResource {
+class BaseResponse {
+  @Field()
+  // Your total request limit for the monthly period
+  rateLimit: number;
+
+  @Field()
+  // How many of these requests remain
+  remainingLimit: number;
+
+  @Field()
+  // UNIX timestamp of when the currently monthly period will roll over
+  rateLimitReset: number;
+}
+
+@ObjectType()
+export class PhotoResource extends BaseResponse {
   @Field()
   id: number;
 
@@ -60,7 +75,7 @@ export class PhotoResource {
 }
 
 @ObjectType()
-export class PhotoArrayResponse {
+export class PhotoArrayResponse extends BaseResponse {
   @Field(() => [PhotoResource])
   photos: PhotoResource[];
 

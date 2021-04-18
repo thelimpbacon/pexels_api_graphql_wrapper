@@ -26,7 +26,12 @@ export class PhotoResolver {
           Authorization: process.env.API_KEY,
         },
       });
-      return photo?.data;
+      return {
+        ...photo?.data,
+        rateLimit: photo.headers["x-ratelimit-limit"],
+        remainingLimit: photo.headers["x-ratelimit-remaining"],
+        rateLimitReset: photo.headers["x-ratelimit-reset"],
+      };
     } catch (error) {
       console.error(error.message);
       return null;
@@ -41,6 +46,7 @@ export class PhotoResolver {
     try {
       const curatedPhotos = await axios.get(CURATED_PHOTOS, {
         headers: {
+          "content-type": "application/json",
           Authorization: process.env.API_KEY,
         },
         params: {
@@ -49,7 +55,12 @@ export class PhotoResolver {
         },
       });
 
-      return curatedPhotos.data;
+      return {
+        ...curatedPhotos.data,
+        rateLimit: curatedPhotos.headers["x-ratelimit-limit"],
+        remainingLimit: curatedPhotos.headers["x-ratelimit-remaining"],
+        rateLimitReset: curatedPhotos.headers["x-ratelimit-reset"],
+      };
     } catch (error) {
       console.error(error.message);
       return [];
@@ -77,7 +88,12 @@ export class PhotoResolver {
         },
       });
 
-      return searchedPhotos.data;
+      return {
+        ...searchedPhotos.data,
+        rateLimit: searchedPhotos.headers["x-ratelimit-limit"],
+        remainingLimit: searchedPhotos.headers["x-ratelimit-remaining"],
+        rateLimitReset: searchedPhotos.headers["x-ratelimit-reset"],
+      };
     } catch (error) {
       console.error(error.message);
       return [];
